@@ -1,6 +1,9 @@
-#include <stdio.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+using namespace std;
 
-int main(){
 
-return 1;
+int main(int argc, char* argv[]){
+  return 1;
 }
