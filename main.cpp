@@ -12,6 +12,8 @@ int s1,s2;
 
 void visit(int x,int y,int step){
     board[x][y]=step;
+    
+    //cout<<step<<endl;
     step++;
     if(step>s1*s2) {
         for(int i=0;i<s1;i++){
