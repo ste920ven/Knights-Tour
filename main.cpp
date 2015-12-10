@@ -9,6 +9,8 @@ using namespace std;
 
 int **board;
 int s1,s2;
+vector< vector<int> > chessBoard;
+
 
 void visit(int x,int y,int step){
     board[x][y]=step;
@@ -42,6 +44,23 @@ void visit(int x,int y,int step){
     }
     board[x][y]=0;
 }
+
+void visitWithHeuristic(int x, int y, int step){
+  chessBoard[x][y] = step;
+  step++;
+  if(step > s1 * s2){
+    for(int i = 0; i < m; i++){
+      for(int j = 0; j < n; j++){
+	cout << chessBoard[i][j] << " ";
+      }
+      cout << endl;
+    }
+    exit(1);
+  }
+  
+    
+}
+
 void bruteForce(){
     int step=1;
     board=new int*[s1];
@@ -61,11 +80,10 @@ void bruteForce(){
 
 void warnsdorffsRule(int m, int n){
   //intialize chessboard
-  vector< vector<int> > chessBoard;
   for(int i = 0; i < m; i++){
     vector<int> temp;
     for(int j = 0; j < n; j++){
-      temp.push_back(-1);
+      temp.push_back(0);
     }
     chessBoard.push_back(temp);
   }
@@ -76,6 +94,9 @@ void warnsdorffsRule(int m, int n){
   //   }
   //   cout << endl;
   // }
+  visitWithHeuristic(0,0,1);
+  
+
 }
 
 
