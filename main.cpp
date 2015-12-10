@@ -54,9 +54,11 @@ void bruteForce(){
     pid_t pid = fork();
     int cstat=-1;
     if (pid == 0) visit(0,0,1);
-    else wait(&cstat);
+    else wait(cstat);
     
 }
+
+
 
 int main(int argc, char* argv[]){
     if(argc == 3){
