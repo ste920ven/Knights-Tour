@@ -59,12 +59,32 @@ void bruteForce(){
 }
 
 
+void warnsdorffsRule(int m, int n){
+  //intialize chessboard
+  vector< vector<int> > chessBoard;
+  for(int i = 0; i < m; i++){
+    vector<int> temp;
+    for(int j = 0; j < n; j++){
+      temp.push_back(-1);
+    }
+    chessBoard.push_back(temp);
+  }
+  //Print out chessboard
+  // for(int i = 0; i < m; i++){
+  //   for(int j = 0; j < n; j++){
+  //     cout << chessBoard[i][j] << " ";
+  //   }
+  //   cout << endl;
+  // }
+}
+
 
 int main(int argc, char* argv[]){
     if(argc == 3){
         s1=atoi(argv[1]);
         s2=atoi(argv[2]);
         bruteForce();
+	warnsdorffsRule(s1,s2);
     }
     return 1;
 }
