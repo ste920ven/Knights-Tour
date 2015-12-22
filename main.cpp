@@ -33,6 +33,7 @@ int **board;
 int s1,s2;
 vector< vector<int> > chessBoard;
 clock_t start;
+clock_t startBrute;
 
 void visit(int x,int y,int step){
     board[x][y]=step;
@@ -46,6 +47,7 @@ void visit(int x,int y,int step){
             }
             cout<<endl;
         }
+        cout << "Brute force: " << (clock() - startBrute)/ (double)(CLOCKS_PER_SEC / 1000) << " ms" << endl;
         exit(1);
     }
 
@@ -183,7 +185,7 @@ void bruteForce(){
     pid_t pid = fork();
     int cstat=-1;
     if (pid == 0) visit(0,0,1);
-    else wait(cstat);
+    else wait(&cstat);
     
 }
 
@@ -209,12 +211,14 @@ void warnsdorffsRule(int m, int n){
 
 }
 
-
 int main(int argc, char* argv[]){
     if(argc == 3){
         s1=atoi(argv[1]);
         s2=atoi(argv[2]);
-	bruteForce();
+        
+        startBrute = clock();
+        bruteForce();
+        
         start = clock();
 	warnsdorffsRule(s1,s2);
     }
