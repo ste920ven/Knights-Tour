@@ -37,21 +37,34 @@ clock_t startBrute;
 bool done=false;
 int counter=0;
 
+int bruteForceTimeout = 1;
+
 void visit(int x,int y,int step){
     if (!done) {
         board[x][y]=step;
-        
+	
+	//print an update every 5 seconds
+	if((clock() - startBrute)/(double)( CLOCKS_PER_SEC / 1000) >= 5000 * bruteForceTimeout ){
+	   cout << "Brute Force has been running for " <<bruteForceTimeout * 5 << " seconds." << endl;
+	   bruteForceTimeout++;
+	}
+	//If brute force has been runnning for 30 seconds, stop running
+	if((clock() - startBrute)/ (double)(CLOCKS_PER_SEC / 1000) >= 30000){
+	  cout << "Brute Force has taken more than 30 seconds. Abandoned." << endl;
+	  done = true;
+	}
         //cout<<step<<endl;
         step++;
         if(step>s1*s2) {
+	  cout << endl << "Brute Force:" << endl;
             for(int i=0;i<s1;i++){
                 for (int j=0;j<s2; j++) {
                     cout<<board[i][j]<<" ";
                 }
                 cout<<endl;
             }
-            cout << "Brute force: " << (clock() - startBrute)/ (double)(CLOCKS_PER_SEC / 1000) << " ms" << endl;
-            cout<"Iterations: "<<counter<<endl;
+            cout << "Time for Brute Force: " << (clock() - startBrute)/ (double)(CLOCKS_PER_SEC / 1000) << " ms" << endl;
+            // cout<<"Iterations: "<<counter<<endl;
             done=true;
             return;
         }
@@ -133,7 +146,8 @@ void visitWithHeuristic(int x, int y, int step){
     
     //If all spaces reached
     if(step > s1 * s2){
-        vector <int> checklist;
+      cout << endl << "Warnsdorff's Rule:" << endl; 
+        // vector <int> checklist;
         for(int i = 0; i < s1; i++){
             for(int j = 0; j < s2; j++){
                 cout << chessBoard[i][j] << " ";
@@ -145,8 +159,7 @@ void visitWithHeuristic(int x, int y, int step){
         // for(int i =0; i < checklist.size(); i++){
         //   cout << checklist[i]<< " ";
         // }
-        cout << "-------------------"<<endl;
-        cout << "Time: " << (clock() - start)/ (double)(CLOCKS_PER_SEC / 1000) << " ms" << endl;
+        cout << "Time for Warnsdorff's Rule: " << (clock() - start)/ (double)(CLOCKS_PER_SEC / 1000) << " ms" << endl;
         exit(1);
     }
     //possible moves based on clock hand position
@@ -218,12 +231,14 @@ int main(int argc, char* argv[]){
     if(argc == 3){
         s1=atoi(argv[1]);
         s2=atoi(argv[2]);
+	
         
         startBrute = clock();
         bruteForce();
-        
-        start = clock();
-        warnsdorffsRule(s1,s2);
+
+	start = clock();
+	warnsdorffsRule(s1,s2);
+
     }
     return 1;
 }
